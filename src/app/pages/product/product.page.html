@@ -1,25 +1,24 @@
 <div class="d-flex flex-wrap">
+  @for (product of productFacade.data(); track $index) {
 
-    @let products = productFacade.data;
-    @for( product of products(); track $index ) {
+    @let item = product | toCardItem;
+    <ng-template *ngTemplateOutlet="card; context: {$implicit: product, item: item}">
 
-        @let item = product | toCardItem;
+    </ng-template>
 
-        <qui-card
-            class="m-1"
-            [title]="item.title"
-            [description]="item.description"
-            [imageUrl]="item.url">
+  }
+</div>
 
-            <qui-button level="danger" 
-                        (click)="productFacade.compute({ type: 'REMOVE_PRODUCT', payload: product })">
-                        Delete
-            </qui-button>
-
-            <qui-button level="success">Edit</qui-button>
-
-        </qui-card>
-
-    }
-  </div>
-
+<ng-template #card let-product let-item="item">
+  <qui-card
+    class="m-1"
+    [title]="item.title"
+    [description]="item.description"
+    [imageUrl]="item.url">
+    <qui-button level="danger"
+                (click)="productFacade.compute({ type: 'REMOVE_PRODUCT', payload: product})">
+      Delete
+    </qui-button>
+    <qui-button level="success">Edit</qui-button>
+  </qui-card>
+</ng-template>
