@@ -1,6 +1,6 @@
 <div class="d-flex flex-wrap">
 
-    @let products = productFacade.products;
+    @let products = productFacade.data;
     @for( product of products(); track $index ) {
 
         @let item = product | toCardItem;
@@ -11,10 +11,10 @@
             [description]="item.description"
             [imageUrl]="item.url">
 
-            <!-- <qui-button level="danger" 
-                        (click)="productService.delete(product)">
+            <qui-button level="danger" 
+                        (click)="productFacade.compute({ type: 'REMOVE_PRODUCT', payload: product })">
                         Delete
-            </qui-button> -->
+            </qui-button>
 
             <qui-button level="success">Edit</qui-button>
 

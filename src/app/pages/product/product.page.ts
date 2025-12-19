@@ -15,7 +15,7 @@ export class ProductPage {
   productFacade = inject(ProductFacade);
 
   ngOnInit(){
-    this.productFacade.load();
+    this.productFacade.compute({ type: 'READ_ALL_PRODUCT', payload: null });
   }
  
 }
