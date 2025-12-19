@@ -29,7 +29,7 @@ export interface CrudConsumer<Entity extends WithUniqueId> {
    * - Concrete implementations decide how it is used internally
    *
    * @example
-   * `/api/users`
+   * `http://endpoint/api/users`
    */
   endpoint: Url;
 

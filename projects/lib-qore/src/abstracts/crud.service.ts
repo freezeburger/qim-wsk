@@ -102,6 +102,7 @@ const CrudMeta = {
   },
 } as const;
 
+
 /**
  * Abstract base class providing a generic CRUD service over HTTP.
  *
@@ -120,7 +121,7 @@ export abstract class CrudService<DTO extends WithUniqueId>
   /**
    * Base REST endpoint for the resource.
    *
-   * @example `/api/users`
+   * @example `http(s)://endpoint/api/users`
    */
   abstract endpoint: Url;
 
@@ -186,6 +187,7 @@ export abstract class CrudService<DTO extends WithUniqueId>
    * Explicit null/undefined check allows falsy identifiers (0, "").
    */
   read(target?: DTO["id"]): Promise<CrudConsumerResponse<DTO | DTO[]>> {
+    
     if (target !== undefined && target !== null) {
       this.logger?.log?.(
         `[CrudService] Reading ${this.entityName} with id: ${target}`
@@ -320,13 +322,20 @@ export abstract class CrudService<DTO extends WithUniqueId>
   ): Promise<CrudConsumerResponse<T>> {
     try {
       const result = await firstValueFrom(obs$);
+
+      this.logger?.log?.(
+        `[CrudService] ${meta.success.message} - Payload: ${JSON.stringify(result)} }`
+      );
+
       return this.createResponse(
         "success",
         meta.success.code,
         meta.success.message,
         result
       );
+
     } catch (error) {
+
       this.logger?.log?.(
         `[CrudService] ${meta.error.message} - ${(error as Error).message}`
       );
