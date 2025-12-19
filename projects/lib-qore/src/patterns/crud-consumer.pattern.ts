@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { ShortText, WithUniqueId } from "../types/generics";
+import { ShortText, Url, WithUniqueId } from "../types/generics";
 
 /**
  * CRUD Consumer Pattern
@@ -19,20 +19,20 @@ export interface CrudConsumer<Entity extends WithUniqueId> {
   /**
    * The api endpoint of the service
    */
-  endpoint:string;
+  endpoint:Url;
 
   /**
    * Outgoing data should not contain the id field
    * @param data - The entity to be created
    */
-  create( data:Omit<Entity,'id'> ):Observable<CrudConsumerResponse<Entity> >;
+  create( data:Omit<Entity,'id'> ):Promise<CrudConsumerResponse<Entity> >;
 
   /**
    * Read an entity
    * @param target - The entity to be read
    */
-  read():Observable< CrudConsumerResponse<Entity[]> >;
-  read(target:Entity['id']):Observable< CrudConsumerResponse<Entity> >;
+  read():Promise< CrudConsumerResponse<Entity[]> >;
+  read(target:Entity['id']):Promise< CrudConsumerResponse<Entity> >;
 
 
   /**
@@ -40,13 +40,13 @@ export interface CrudConsumer<Entity extends WithUniqueId> {
    * @param target - The entity to be updated
    * @param data - The new data to be updated
    */
-  update(target:Entity, data:Partial<Omit<Entity,'id'>> ):Observable< CrudConsumerResponse<Entity> >;
+  update(target:Entity, data:Partial<Omit<Entity,'id'>> ):Promise< CrudConsumerResponse<Entity> >;
 
   /**
    * Delete an entity
    * @param target - The entity to be deleted
    */
-  delete(target:Entity):Observable< CrudConsumerResponse<Entity> >;
+  delete(target:Entity):Promise< CrudConsumerResponse<Entity> >;
 }
 
 export interface CrudConsumerResponse<P> {

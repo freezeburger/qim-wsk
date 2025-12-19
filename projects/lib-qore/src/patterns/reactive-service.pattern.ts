@@ -2,7 +2,7 @@ import { Signal } from "@angular/core";
 
 
 export interface Mutation {
-    type: string;
+    type: Uppercase<string>;
     payload: any;
 }  
 

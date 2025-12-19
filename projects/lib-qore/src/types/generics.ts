@@ -12,6 +12,12 @@ export type LongText = string;
 * @description Chaîne de caractères de longueur maximum de 15 caractères.
 */
 export type ShortText = string;
+
+/**
+* @description Chaîne de caractères représentant une URL.
+*/
+export type Url = `${'https://' | 'http://'}${string}`;
+ 
  
 /**
 * @description Chaîne de caractères représentant une URL d'image.
